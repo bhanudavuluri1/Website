@@ -1,0 +1,132 @@
+📧 EMAIL CONFIGURATION GUIDE FOR XAMPP
+
+=========================================
+
+ISSUE: Emails not sending from local XAMPP environment
+
+ROOT CAUSE: 
+- Windows XAMPP doesn't have a real mail server
+- PHP mail() function needs SMTP configured
+- Default localhost:25 doesn't exist
+
+=========================================
+
+SOLUTION 1: USE GMAIL (Recommended for Testing)
+=========================================
+
+Step 1: Enable Gmail App Password
+1. Go to https://myaccount.google.com/
+2. Click "Security" (left sidebar)
+3. Search for "App passwords"
+4. Select "Mail" and "Windows Computer"
+5. Copy the 16-character password
+
+Step 2: Edit C:\xampp\php\php.ini
+Find these lines and modify:
+
+[mail function]
+SMTP = smtp.gmail.com
+smtp_port = 587
+sendmail_from = your-gmail@gmail.com
+
+Step 3: Restart Apache
+- Stop XAMPP Apache
+- Start XAMPP Apache again
+
+Step 4: Test
+- Book an appointment
+- Check your email inbox
+
+=========================================
+
+SOLUTION 2: USE MAILTRAP.IO (Easiest for Testing)
+=========================================
+
+Step 1: Sign Up (Free)
+1. Go to https://mailtrap.io
+2. Sign up with email address
+3. Create new inbox
+4. Copy SMTP settings
+
+Step 2: Update PHP Configuration
+Edit C:\xampp\php\php.ini:
+
+[mail function]
+SMTP = smtp.mailtrap.io
+smtp_port = 587
+sendmail_from = your-email@mailtrap.io
+
+Step 3: Restart Apache
+- Full restart required
+
+Step 4: View Emails
+- Login to Mailtrap.io dashboard
+- All test emails appear there
+
+=========================================
+
+SOLUTION 3: USE SENDGRID (Free Tier)
+=========================================
+
+Step 1: Sign Up
+1. Go to https://sendgrid.com
+2. Sign up (free tier)
+3. Create API key
+4. Verify sender email
+
+Step 2: Configure PHP.ini
+[mail function]
+SMTP = smtp.sendgrid.net
+smtp_port = 587
+sendmail_from = your-verified-email@example.com
+
+Step 3: Add Auth (Advanced)
+Create: C:\xampp\sendmail\ssmtp.conf
+```
+root=your-sendgrid-email@example.com
+mailhub=smtp.sendgrid.net:587
+AuthUser=apikey
+AuthPass=SG.xxxxxxxxxxxx
+UseSTARTTLS=YES
+```
+
+=========================================
+
+QUICK VERIFICATION
+=========================================
+
+Your appointment WAS booked:
+✅ Patient: Davuluri Bhanu Prakash
+✅ Phone: 7780337034  
+✅ Email: bhanudavuluri555@gmail.com
+✅ Date: March 4, 2026 at 10:00 AM
+✅ Status: Pending (in database)
+
+Email log: C:\xampp\htdocs\skin-perfect-clinic\logs\email_log.txt
+
+=========================================
+
+MANUAL WORKAROUND
+=========================================
+
+Until email is configured, the clinic can:
+1. Check admin panel: http://localhost/skin-perfect-clinic/admin_login.php
+   Username: admin
+   Password: admin@123
+
+2. View all appointments for manual follow-up
+
+3. Send confirmation emails manually via Gmail
+
+=========================================
+
+NEED HELP?
+=========================================
+
+If emails still don't work after configuration:
+1. Check error logs: C:\xampp\logs\*
+2. Restart all Apache services
+3. Verify firewall allows port 587
+4. Test PHP mail() function separately
+
+=========================================
